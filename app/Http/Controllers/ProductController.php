@@ -8,35 +8,27 @@ use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('product');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreProductRequest $request)
     {
-        //
+        $id = $this->generateModelID(Product::class);
+        Product::create($request->all());
+        $parameters = ['request' => $request, 'id' => $id];
+        $this->callActivityMethod('products', 'store', $parameters);
+        return redirect()->route('product.index')->with(
+            ['message' => __('common.store'), 'type' => 'Success']);
     }
 
     /**
