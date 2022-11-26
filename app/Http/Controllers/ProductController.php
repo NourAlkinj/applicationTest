@@ -25,8 +25,8 @@ class ProductController extends Controller
     {
         $id = $this->generateModelID(Product::class);
         Product::create($request->all());
-        $parameters = ['request' => $request, 'id' => $id];
-        $this->callActivityMethod('products', 'store', $parameters);
+//        $parameters = ['request' => $request, 'id' => $id];
+//        $this->callActivityMethod('products', 'store', $parameters);
         return redirect()->route('product.index')->with(
             ['message' => __('common.store'), 'type' => 'Success']);
     }
