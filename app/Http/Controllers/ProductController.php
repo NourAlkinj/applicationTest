@@ -8,79 +8,58 @@ use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('product');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(StoreProductRequest $request)
     {
-        //
+        $id = $this->generateModelID(Product::class);
+        Product::create($request->all());
+//        $parameters = ['request' => $request, 'id' => $id];
+//        $this->callActivityMethod('products', 'store', $parameters);
+        return redirect()->route('product.index')->with(
+            ['message' => __('common.store'), 'type' => 'Success']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+
+    public function show( $id)
     {
-        //
+//        $parameters = ['id' => $id];
+          $product = Product::find($id);
+//          $this->callActivityMethod('products', 'show', $parameters);
+          return $product;
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Product $product)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(UpdateProductRequest $request, Product $product)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
+    public function delete( $id)
     {
-        //
+//        $parameters = ['id' => $id];
+        $product = Product::find($id);
+        $product->delete();
+//        $this->callActivityMethod('products', 'delete', $parameters);
+        return redirect()->route('product.index')->with(['message' => __('common.delete'), 'type' => 'Success',]);
+
     }
 }
