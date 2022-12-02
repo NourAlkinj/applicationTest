@@ -11,11 +11,15 @@ class Product extends Model
     protected $fillable = [
         'name',
         'type',
-        'price',
-        'is_perfume',
-        'is_makeup',
-        'is_nailpolish',
+        'photo',
+        'main_price',
+        'main_discount',
+        'category_id',
         'is_active',
         'notes',
     ];
+
+    public function category(){
+        return $this->hasOne(Category::class, 'category_id');
+    }
 }
