@@ -28,4 +28,11 @@ class Order extends Model
         'shipping_price'
 
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function orderDetails(){
+        return $this->hasMany(OrderDetails::class, 'order_id');
+    }
 }

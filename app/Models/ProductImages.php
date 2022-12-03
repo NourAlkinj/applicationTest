@@ -11,4 +11,8 @@ class ProductImages extends Model
     protected $fillable=[
         'product_color_size_id'
     ];
+
+    public function productColorSize(){
+        return $this->belongsTo(ProductColorSize::class, 'product_color_size_id');
+    }
 }

@@ -20,6 +20,14 @@ class Product extends Model
     ];
 
     public function category(){
-        return $this->hasOne(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
+    public function productColor(){
+        return $this->hasMany(ProductColor::class, 'product_id');
+    }
+    public function productSize(){
+        return $this->hasMany(ProductSize::class, 'product_id');
+    }
+
+
 }

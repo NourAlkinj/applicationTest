@@ -15,4 +15,11 @@ class OrderDetails extends Model
         'number',
 
     ];
+
+    public function order(){
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+    public function productColorSize(){
+        return $this->belongsTo(ProductColorSize::class, 'product_color_size_id');
+    }
 }

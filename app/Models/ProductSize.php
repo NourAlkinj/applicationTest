@@ -13,4 +13,13 @@ class ProductSize extends Model
         'product_id',
         'size',
     ];
+
+    public function product(){
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+    public function productColorSize(){
+        return $this->hasMany(ProductColorSize::class, 'product_size_id');
+    }
+
+
 }
