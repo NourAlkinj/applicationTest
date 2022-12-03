@@ -62,4 +62,9 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with(['message' => __('common.delete'), 'type' => 'Success',]);
 
     }
+
+    public function getAllProduct( )
+    {
+        $product = Product::all();
+    }
 }
