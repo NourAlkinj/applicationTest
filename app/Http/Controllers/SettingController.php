@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
+use App\Utils\ImageUpload;
 use Image;
 
 class SettingController extends Controller
@@ -36,13 +37,9 @@ class SettingController extends Controller
     public function update(UpdateSettingRequest $request, Setting $setting)
     {
         $setting->update($request->validated());
-        $imageName=date('Y-m-d').'.'.$request->logo->extension();
-        $logo = Image::make($request->logo->path());
-        $logo->fit(200,200,function ($constraint) {
-            $constraint->upsize();
-        })->stream;
-        Storage::disk('public')->put($imageName,$logo);
+        ImageUpload::uploadImage();
         $setting->update(['logo'=>'public/'.$imageName]);
+
         return redirect()->route('dashboard.settings.index')->with('success','تم تحديث الإعدادات بنجاحweb.php');
     }
 
