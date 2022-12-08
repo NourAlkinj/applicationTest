@@ -5,72 +5,45 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
+use Image;
 
 class SettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        return view('dashboard.settings.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSettingRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreSettingRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Setting  $setting
-     * @return \Illuminate\Http\Response
-     */
     public function show(Setting $setting)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Setting  $setting
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Setting $setting)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSettingRequest  $request
-     * @param  \App\Models\Setting  $setting
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateSettingRequest $request, Setting $setting)
     {
-        //
+        $setting->update($request->validated());
+        $imageName=date('Y-m-d').'.'.$request->logo->extension();
+        $logo = Image::make($request->logo->path());
+        $logo->fit(200,200,function ($constraint) {
+            $constraint->upsize();
+        })->stream;
+        Storage::disk('public')->put($imageName,$logo);
+        $setting->update(['logo'=>'public/'.$imageName]);
+        return redirect()->route('dashboard.settings.index')->with('success','تم تحديث الإعدادات بنجاحweb.php');
     }
 
     /**

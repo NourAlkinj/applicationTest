@@ -10,10 +10,8 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-             $table->string('title')->nullable()->default(null);
-
+             $table->string('name')->nullable()->default(null);
             $table->string('description')->nullable()->default(null);
-
             $table->string('address')->nullable()->default(null);
             $table->string('phone')->nullable()->default(null);
             $table->string('email')->nullable()->default(null);
